@@ -21,4 +21,56 @@ INSERT INTO Atlar (name, turu, yas, Aciklama)VALUES ('Percheron', 'Percheron', 1
 INSERT INTO Atlar (name, turu, yas, Aciklama)VALUES ('Clydesdale', 'Clydesdale', 8, 'Taşıyıcı at');
 INSERT INTO Atlar (name, turu, yas, Aciklama)VALUES ('Araber', 'Arabian', 12, 'Dayanıklı yarış atı');
 INSERT INTO Atlar (name, turu, yas, Aciklama)VALUES ('Belgian', 'Belgian', 6, 'Tarlada kullanılan at');
--- ve 10 vedi daha 
+-- ve 10 vedi daha
+select * from Atlar -- eklediğimiz atları çektik
+UPDATE Atlar SET yas = ABS(CAST(CAST(NEWID() AS VARBINARY) AS INT)) % 10 + 1 -- atların yaşlarını rastgele 1-10 arası güncelledik
+
+select * from Atlar order by name, turu, yas
+
+
+---------------------------------------------
+create table Kediler (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+    name NVARCHAR(100),
+    turu NVARCHAR(100),
+    yas int,
+	Aciklama nvarchar(max)
+);
+
+
+INSERT INTO Kediler (name, turu, yas, Aciklama)
+VALUES ('Lily', 'Tabby', 3, 'Sakin ve sevimli bir kedi.'); -- bir veri ekledik 
+
+INSERT INTO Kediler (name, turu, yas, Aciklama)
+VALUES 
+('Mia', 'Persian', 4, 'Uzun tüylü, zarif bir kedi.'),
+('Max', 'British Shorthair', 2, 'Oyuncu ve sevimli bir kedicik.'),
+('Casper', 'Scottish Fold', 5, 'Kulakları katlanmış, tatlı bir kedi.'),
+('Luna', 'Siamese', 3, 'Göz alıcı bir kedi, enerjik ve oyunbaz.'),
+('Oscar', 'Maine Coon', 6, 'Büyük ve dost canlısı bir kedi.'),
+('Simba', 'Persian', 1, 'Uyumayı seven, sevimli bir kedicik.'),
+('Tom', 'Sphynx', 2, 'Tüysüz ve sevimli bir kedi.'),
+('Sasha', 'Bengal', 3, 'Canlı ve hareketli bir kedi.'),
+('Tigger', 'Ragdoll', 4, 'Nazik ve sevecen, oyuncu bir kedi.'),
+('Whiskers', 'Russian Blue', 5, 'Mavi tüylü, sessiz bir kedi.'); -- 10 tane daha ekledik 
+
+select * from kediler
+
+-- Atlar tablosunda "turu" sütununu "cins" olarak değiştirme
+EXEC sp_rename 'Atlar.turu', 'cins', 'COLUMN';
+
+-- Kediler tablosunda "turu" sütununu "cins" olarak değiştirme
+EXEC sp_rename 'Kediler.turu', 'cins', 'COLUMN';
+
+-- Atlar tablosuna "turu" sütununu ekleme
+ALTER TABLE Atlar
+ADD turu NVARCHAR(100);
+
+-- Kediler tablosuna "turu" sütununu ekleme
+ALTER TABLE Kediler
+ADD turu NVARCHAR(100);
+
+--Atlarını ve kedilerin Türünü ayarlama
+
+UPDATE Atlar SET turu = 'at' -- atların yaşlarını rastgele 1-10 arası güncelledik
+UPDATE kediler SET turu = 'kedi' -- atların yaşlarını rastgele 1-10 arası güncelledik
